@@ -2,7 +2,7 @@
 	<view class="item">
 		<image class="item-img" :src="url" mode="widthFix"></image>
 		<view class="item-title-box">
-			<view url="url" class="item-title">{{title}}</view>
+			<view url="url" class="item-title"  v-show="title">{{title}}</view>
 		</view>
 		<view class="name">
 			<image class="item-ava" :src="avatar"></image>

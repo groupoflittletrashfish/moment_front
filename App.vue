@@ -1,18 +1,19 @@
 <script>
 	export default {
 		onLaunch: function() {
-			if(uni.getStorageSync('token')){
+			if (uni.getStorageSync('token')) {
 				uni.reLaunch({
-					url:'/pages/index/index',
+					url: '/pages/index/index',
 					success() {
 						plus.navigator.closeSplashscreen()
 					}
 				})
-			}else{
+			} else {
 				uni.reLaunch({
-					url:'/pages/login/login',
+					url: '/pages/login/login',
 					success() {
-						 plus.navigator.closeSplashscreen()}
+						plus.navigator.closeSplashscreen()
+					}
 				})
 			}
 		}
@@ -25,6 +26,7 @@
 	@import "@/uni_modules/uview-ui/index.scss";
 	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
+
 	// 设置整个项目的背景色
 	page {
 		background-color: #f5f5f5;
@@ -37,5 +39,10 @@
 		font-size: 14px;
 		color: #333;
 		padding: 10px;
+	}
+
+	.unified_color {
+		background-color: #f5f5f5;
+
 	}
 </style>
