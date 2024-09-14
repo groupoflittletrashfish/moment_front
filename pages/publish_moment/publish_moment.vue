@@ -54,7 +54,7 @@
 						filter: 'none', // 可以设置为 'image'、'video' 或 'none' (不限制类型)
 						multiple: true, // 支持多选
 						system: false, // 使用系统UI（默认为false，使用自定义UI）
-						maximum: 9 // 最大选择文件数
+						maximum: 1 // 最大选择文件数
 					}
 				);
 			},

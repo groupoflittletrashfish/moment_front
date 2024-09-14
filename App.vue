@@ -29,7 +29,7 @@
 
 	// 设置整个项目的背景色
 	page {
-		background-color: #f5f5f5;
+		background-color: rgb(27, 27, 37);
 		height: 100%;
 		width: 100%;
 	}
@@ -42,7 +42,7 @@
 	}
 
 	.unified_color {
-		background-color: #f5f5f5;
-
+		background-color: rgb(27, 27, 37);
+		color: white;
 	}
 </style>

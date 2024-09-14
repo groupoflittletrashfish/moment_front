@@ -3,18 +3,20 @@
 		<!-- 吸顶和tabs -->
 		<u-sticky bgColor="#ffffff">
 			<u-tabs :list="tabs" class="unified_color" :activeStyle="{
-            color: '#000000',
-            fontWeight: 'bold',
-            transform: 'scale(1.05)'
+            color: 'white',
+            fontWeight: 'bolder',
+            transform: 'scale(1.05)',
+			fontSize:'large'
         }" lineWidth="60" lineColor="#f56c6c" :inactiveStyle="{
-            color: '#606266',
-            transform: 'scale(1)'
-        }"></u-tabs>
+            color: 'white',
+            transform: 'scale(1)',
+			fontSize:'large'
+        }" @change="change_tab"></u-tabs>
 		</u-sticky>
 
 
 		<!-- 瀑布流 -->
-		<view v-show="index == 1" class="template_container">
+		<view v-show="index == 0" class="template_container">
 			<scroll-view class="scroll" scroll-y show-scrollbar @refresherrefresh="refresh">
 				<view class="left">
 					<view v-for="(item,index) in list" :key="index">
@@ -29,6 +31,15 @@
 					</view>
 				</view>
 			</scroll-view>
+		</view>
+
+		<!-- 时光 -->
+		<view class="unified_color">
+			<u-scroll-list :indicator="false" class="scroll_list">
+				<view v-for="(item, index) in time_scroll_list" :key="index">
+					<view class="scroll_item">{{item.name}}</view>
+				</view>
+			</u-scroll-list>
 		</view>
 	</view>
 </template>
@@ -47,9 +58,16 @@
 			return {
 				tabs: [{
 					'name': '广场'
+				}, {
+					'name': '时光'
 				}],
-				index: 1,
-				list: []
+				index: 0,
+				list: [],
+				time_scroll_list: [{
+					'name': '心情'
+				}, {
+					'name': '歌单'
+				}]
 			}
 		},
 		methods: {
@@ -75,6 +93,9 @@
 				}).catch(e => {
 					console.error(e)
 				})
+			},
+			change_tab(item) {
+				this.index = item.index
 			}
 		}
 	}
@@ -106,6 +127,19 @@
 	.template_container {
 		flex: 1;
 		height: calc(100% - 50rpx);
+	}
+	
+	.scroll_list{
+		height: 120rpx;
+		padding: 10rpx 10rpx;
+	}
+	
+	.scroll_item{
+		width: 80rpx;
+		margin: 10rpx 10rpx;
+		border-radius: 10rpx;
+		background-color: #24242C;
+		text-align: center;
 	}
 
 	/deep/ .u-tabs__wrapper__nav__line {

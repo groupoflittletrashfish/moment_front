@@ -31,22 +31,41 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/settings/settings"
+		},
+		{
+			"path" : "components/menus-list/menus-list",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/wangyiyun_setting/wangyiyun_setting",
+			"style" : 
+			{
+				"navigationBarTitleText" : "网易云音乐"
+			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#1B1B25",
+		"backgroundColor": "#1B1B25",
+		"disableScroll": true,
+		"enablePullDownRefresh": false,
 		"app-plus": {
 			"background": "#efeff4"
 		}
 	},
 	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#3cc51f",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
+		"color": "white",
+		"selectedColor": "white",
+		"borderStyle": "rgb(27,27,37)",
+		"backgroundColor": "rgb(27,27,37)",
 		"list": [{
 			"pagePath": "pages/index/index",
 			"iconPath": "static/image/home.png",

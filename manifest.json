@@ -48,7 +48,8 @@
 				]
 			},
 			"ios": {
-				"debug": true
+				"debug": true,
+				"orientation": "portrait" // 设置为竖屏模式
 			},
 			/* ios打包配置 */
 			"sdkConfigs": {}

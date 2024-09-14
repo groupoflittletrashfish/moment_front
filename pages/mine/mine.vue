@@ -1,10 +1,21 @@
 <template>
-	<view class="container">
+	<view class="container unified_color">
 		<view class="background">
 			<image src="../../static/image/fengmian.jpg" class="fengmian"></image>
+			<!-- 头像及签名等信息 -->
+			<view class="avatar_container">
+				<!-- 头像 -->
+				<u-avatar :src="user.avatar" class="avatar" size="200"></u-avatar>
+				<!-- 信息 -->
+				<view class="desc">
+					<view class="nickname">{{user.nickname}}</view>
+					<view class="sign">{{user.sign}}</view>
+				</view>
+			</view>
 		</view>
 		<!-- 发布按钮 -->
-		<uni-icons class="photo" type="camera-filled" size="30" @click="to_public_moment_view"></uni-icons>
+		<uni-icons class="photo" type="camera-filled" size="30" @click="toPublicMomentView"></uni-icons>
+		<uni-icons class="gear" type="gear" size="30" @click="toSettingsView"></uni-icons>
 	</view>
 </template>
 
@@ -12,20 +23,40 @@
 	import {
 		uploadFile
 	} from '../../service/api/file';
+	import {
+		getUserInfo
+	} from '../../service/api/user.js';
 	export default {
 		data() {
 			return {
-
+				user: {
+					type: Object
+				}
 			}
 		},
+		mounted() {
+			getUserInfo().then(data => {
+				const json = JSON.parse(data)
+				this.user = json
+				uni.setStorageSync('user', json)
+			})
+		},
 		methods: {
-			to_public_moment_view(){
+			toPublicMomentView() {
 				uni.navigateTo({
-					url:'/pages/publish_moment/publish_moment'
+					url: '/pages/publish_moment/publish_moment'
 				})
 			},
 			selectPhoto() {
-				
+
+			},
+			toSettingsView(){
+				console.info(11111)
+				uni.navigateTo({
+					url: '/pages/settings/settings'
+				}).catch(e=>{
+					console.error(e)
+				})
 			}
 		}
 	}
@@ -35,7 +66,6 @@
 	.container {
 		width: 100%;
 		height: 100%;
-		background-color: blanchedalmond;
 		/* 去除标题栏高度 */
 		/* padding-top: ; */
 		box-sizing: border-box;
@@ -44,12 +74,19 @@
 
 	.background {
 		width: 100%;
-		height: 30%;
+		height: 35%;
 		position: absolute;
-		z-index: 1;
+
 	}
 
 	.photo {
+		position: absolute;
+		right: 10rpx;
+		top: calc(var(--status-bar-height) + 5rpx + 35%);
+		z-index: 99;
+	}
+	
+	.gear{
 		position: absolute;
 		right: 10rpx;
 		top: calc(var(--status-bar-height) + 5rpx);
@@ -59,5 +96,44 @@
 	.fengmian {
 		width: 100%;
 		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
+
+	.avatar_container {
+		z-index: 10;
+		position: absolute;
+		top: calc(50% - 100rpx);
+		left: calc(50% - 40%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #fff;
+		width: 80%;
+		
+	}
+
+	.nickname {
+		margin-top: 20rpx;
+		font-size: large;
+		font-weight: bolder;
+	}
+	
+	.sign{
+		font-size: smaller;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: block;
+		width: 100%;
+	}
+	
+	.desc{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: inherit;
 	}
 </style>

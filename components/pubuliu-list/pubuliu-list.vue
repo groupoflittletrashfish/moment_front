@@ -1,9 +1,15 @@
 <template>
-	<view class="item">
-		<image class="item-img" :src="url" mode="widthFix"></image>
+	<view class="item unified_color">
+		<image class="item-img" :src="url" mode="widthFix" @click="preview" v-if="!show"></image>
 		<view class="item-title-box">
-			<view url="url" class="item-title"  v-show="title">{{title}}</view>
 		</view>
+		<view url="url" class="item-title" v-show="title">{{title}}</view>
+		<!-- <view v-show="show"> -->
+		<!-- <video id="url" class="item-img" :src="url" v-show="media_type == 'video'" direction="0"
+				show-fullscreen-btn show-progress="false" show-play-btn="false" show-center-play-btn="false" loop
+				autoplay auto-pause-if-navigate></video> -->
+
+		<!-- </view> -->
 		<view class="name">
 			<image class="item-ava" :src="avatar"></image>
 			<text class="name-title">{{name}}</text>
@@ -20,15 +26,68 @@
 			url: '',
 			title: '',
 			name: '',
-			num:'',
-			avatar:''
+			num: '',
+			avatar: ''
+		},
+		mounted() {
+			const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+			const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv', 'webm'];
+			const extension = this.url.split('.').pop().toLowerCase();
+			if (imageExtensions.includes(extension)) {
+				this.media_type = 'image'
+
+			}
+			if (videoExtensions.includes(extension)) {
+				this.media_type = 'video'
+			}
+		},
+		data() {
+			return {
+				media_type: 'image',
+				show: false
+			}
+		},
+		methods: {
+			preview() {
+				if (this.media_type === 'image') {
+					uni.previewImage({
+						urls: [this.url]
+					})
+				}
+				if (this.media_type === 'video') {
+					// this.show = true
+					// let videoContext = uni.createVideoContext('url', this)
+					// videoContext.requestFullScreen({
+					// 	'direction': 0
+					// })
+					const videoPlayer = plus.video.createVideoPlayer(this.url, {
+						"src": this.url, // 视频地址
+						"autoplay": true,
+						"controls": true,
+						"show-progress": true,
+						"loop": true,
+						"show-center-play-btn": false, // 是否显示中央播放按钮
+						"show-fullscreen-btn": false, // 是否显示全屏按钮
+						"show-play-btn": false, // 是否显示播放按钮
+					});
+					videoPlayer.requestFullScreen(0)
+					videoPlayer.play()
+					videoPlayer.addEventListener('fullscreenclick', function(e) {
+						//点击屏幕就退出全屏
+						videoPlayer.exitFullScreen()
+					})
+				}
+			},
+			// play() {
+			// 	console.log(3333)
+			// 	this.videoContext.requestFullScreen()
+			// }
 		}
 	}
 </script>
 
 <style>
 	.item {
-		background-color: #fff;
 		margin: 10rpx 3%;
 		margin-bottom: 20rpx;
 		display: inline-block;
@@ -55,7 +114,7 @@
 	}
 
 	.item-img {
-		width: 100%
+		width: 100%;
 	}
 
 	.item-title {
@@ -66,9 +125,9 @@
 		-webkit-line-clamp: 1;
 		overflow: hidden;
 		font-family: 'PingFang SC-Medium';
-		color: #1e1e1e;
 		margin: 15rpx;
 		line-height: 27rpx;
+		color:white;
 	}
 
 	.item .name {
@@ -78,7 +137,7 @@
 		padding-bottom: 10rpx;
 		align-items: center;
 		font-size: 22rpx;
-		color: #1e1e1e;
+		color: white;
 		font-family: 'PingFang SC-Medium';
 	}
 
@@ -100,6 +159,7 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 1;
 		overflow: hidden;
+		color: white;
 	}
 
 	.name text:last-child {
