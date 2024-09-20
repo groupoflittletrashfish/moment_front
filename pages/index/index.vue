@@ -1,17 +1,28 @@
 <template>
 	<view class="container">
 		<!-- 吸顶和tabs -->
-		<u-sticky bgColor="#ffffff">
-			<u-tabs :list="tabs" class="unified_color" :activeStyle="{
-            color: 'white',
-            fontWeight: 'bolder',
-            transform: 'scale(1.05)',
-			fontSize:'large'
-        }" lineWidth="60" lineColor="#f56c6c" :inactiveStyle="{
-            color: 'white',
-            transform: 'scale(1)',
-			fontSize:'large'
-        }" @change="change_tab"></u-tabs>
+		<u-sticky bgColor="#ffffff" class="sticky">
+			<view class="unified_color tabs">
+				<u-tabs :list="tabs" :activeStyle="{
+				    color: 'white',
+				    fontWeight: 'bolder',
+				    transform: 'scale(1.05)',
+					fontSize:'large'
+				}" lineWidth="60" lineColor="#f56c6c" :inactiveStyle="{
+				    color: 'white',
+				    transform: 'scale(1)',
+					fontSize:'large'
+				}" @change="change_tab">
+
+					<!-- 发布按钮 -->
+					<view slot="right">
+						<uni-icons type="camera-filled" color="#fff" size="30" class="photo" @click="toPublicMomentView"
+							style="margin-right: 10rpx;">
+						</uni-icons>
+					</view>
+				</u-tabs>
+			</view>
+
 		</u-sticky>
 
 
@@ -21,13 +32,13 @@
 				<view class="left">
 					<view v-for="(item,index) in list" :key="index">
 						<pubuliu-list v-if="index% 2==0" :url="item.url" num="1" :title="item.title" :name="item.name"
-							:avatar="item.avatar"></pubuliu-list>
+							:avatar="item.avatar" :tags="item.momentTags"></pubuliu-list>
 					</view>
 				</view>
 				<view class="right">
 					<view v-for="(item,index) in list" :key="index">
 						<pubuliu-list v-if="index% 2==1" :url="item.url" num="1" :title="item.title" :name="item.name"
-							:avatar="item.avatar"></pubuliu-list>
+							:avatar="item.avatar" :tags="item.momentTags"></pubuliu-list>
 					</view>
 				</view>
 			</scroll-view>
@@ -77,8 +88,7 @@
 			load_moment() {
 				queryAllMoment().then(data => {
 					this.list = []
-					let arr = JSON.parse(data)
-					arr.forEach(obj => {
+					data.forEach(obj => {
 						if (obj['momentMedia']) {
 							obj['momentMedia'].forEach(e => {
 								this.list.push({
@@ -96,7 +106,12 @@
 			},
 			change_tab(item) {
 				this.index = item.index
-			}
+			},
+			toPublicMomentView() {
+				uni.navigateTo({
+					url: '/pages/publish_moment/publish_moment'
+				})
+			},
 		}
 	}
 </script>
@@ -128,13 +143,13 @@
 		flex: 1;
 		height: calc(100% - 50rpx);
 	}
-	
-	.scroll_list{
+
+	.scroll_list {
 		height: 120rpx;
 		padding: 10rpx 10rpx;
 	}
-	
-	.scroll_item{
+
+	.scroll_item {
 		width: 80rpx;
 		margin: 10rpx 10rpx;
 		border-radius: 10rpx;
@@ -142,7 +157,27 @@
 		text-align: center;
 	}
 
+	.photo {
+		/* top: calc(var(--status-bar-height) + 5rpx + 35%); */
+		/* 	z-index: 99;
+		background-color: blue; */
+	}
+
+	.sticky {
+		/* 		position: relative;
+		display: flex; */
+		/* 		flex-direction: row;
+		justify-content: space-between;
+		align-items: center; */
+	}
+
 	/deep/ .u-tabs__wrapper__nav__line {
 		left: 25rpx;
 	}
+
+	/* 	.tabs{
+		background-color: red;
+		flex:1;
+		display: inline-block;
+	} */
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<uni-icons type="left" size="30" @click="left_click"></uni-icons>
+		<uni-icons type="left" size="30" @click="left_click" color="#fff"></uni-icons>
 		<view>
 			<button class="btn" size="success" type="default" @click="right_click">
 				<slot></slot>

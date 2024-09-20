@@ -13,8 +13,6 @@
 				</view>
 			</view>
 		</view>
-		<!-- 发布按钮 -->
-		<uni-icons class="photo" type="camera-filled" size="30" @click="toPublicMomentView"></uni-icons>
 		<uni-icons class="gear" type="gear" size="30" @click="toSettingsView"></uni-icons>
 	</view>
 </template>
@@ -42,11 +40,6 @@
 			})
 		},
 		methods: {
-			toPublicMomentView() {
-				uni.navigateTo({
-					url: '/pages/publish_moment/publish_moment'
-				})
-			},
 			selectPhoto() {
 
 			},
@@ -77,13 +70,6 @@
 		height: 35%;
 		position: absolute;
 
-	}
-
-	.photo {
-		position: absolute;
-		right: 10rpx;
-		top: calc(var(--status-bar-height) + 5rpx + 35%);
-		z-index: 99;
 	}
 	
 	.gear{

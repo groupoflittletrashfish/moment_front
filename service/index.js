@@ -22,7 +22,7 @@ http.interceptor.request((config, cancel) => {
 	uni.showLoading({
 		title: "请稍后...",
 		mask: true,
-		duration:15000
+		duration: 15000
 	})
 	var _token = uni.getStorageSync('token'); // 从本地缓存中同步获取指定 key 对应的内容。
 	if (_token) {
@@ -55,7 +55,12 @@ http.interceptor.response(
 			});
 		} else {
 			if (response.statusCode == 200 && response.data.code == 200) {
-				return response.data.data;
+				if (typeof response.data.data === 'string') {
+					return JSON.parse(response.data.data);
+				} else {
+					return response.data.data
+				}
+
 			} else {
 				if (!response.data) {
 					uni.reLaunch({
@@ -90,7 +95,7 @@ http.interceptor.response(
 						icon: 'none',
 						position: 'bottom',
 						title: response.data.msg,
-						duration:5000
+						duration: 5000
 					});
 				}
 			}

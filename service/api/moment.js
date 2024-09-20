@@ -11,3 +11,12 @@ export function publish(data) {
 export function queryAllMoment() {
 	return http.get('/moment/queryAllMoment')
 }
+
+export function queryAllTags() {
+	return http.get('/moment/queryAllTags')
+}
+
+
+export function addTag(data) {
+	return http.post('/moment/addTag', data)
+}

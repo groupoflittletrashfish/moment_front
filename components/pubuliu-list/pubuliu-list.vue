@@ -3,13 +3,8 @@
 		<image class="item-img" :src="url" mode="widthFix" @click="preview" v-if="!show"></image>
 		<view class="item-title-box">
 		</view>
+		<tag v-for="(item,index) in tags" :key="index" :data="item"></tag>
 		<view url="url" class="item-title" v-show="title">{{title}}</view>
-		<!-- <view v-show="show"> -->
-		<!-- <video id="url" class="item-img" :src="url" v-show="media_type == 'video'" direction="0"
-				show-fullscreen-btn show-progress="false" show-play-btn="false" show-center-play-btn="false" loop
-				autoplay auto-pause-if-navigate></video> -->
-
-		<!-- </view> -->
 		<view class="name">
 			<image class="item-ava" :src="avatar"></image>
 			<text class="name-title">{{name}}</text>
@@ -27,7 +22,11 @@
 			title: '',
 			name: '',
 			num: '',
-			avatar: ''
+			avatar: '',
+			tags: {
+				type: Array,
+				default: () => []
+			}
 		},
 		mounted() {
 			const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
@@ -127,7 +126,7 @@
 		font-family: 'PingFang SC-Medium';
 		margin: 15rpx;
 		line-height: 27rpx;
-		color:white;
+		color: white;
 	}
 
 	.item .name {

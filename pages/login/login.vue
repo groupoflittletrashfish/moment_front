@@ -24,8 +24,8 @@
 		},
 		methods: {
 			login() {
-				login({username:this.username,password:this.password}).then(res=>{
-					uni.setStorageSync('token',res)
+				login({username:this.username,password:this.password}).then(data=>{
+					uni.setStorageSync('token',data.token)
 					uni.reLaunch({
 						url:'/pages/index/index'
 					})
