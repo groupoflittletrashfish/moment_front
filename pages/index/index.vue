@@ -28,17 +28,17 @@
 
 		<!-- 瀑布流 -->
 		<view v-show="index == 0" class="template_container">
-			<scroll-view class="scroll" scroll-y show-scrollbar @refresherrefresh="refresh">
+			<scroll-view class="scroll" scroll-y show-scrollbar @refresherrefresh="refresh" refresher-enabled>
 				<view class="left">
 					<view v-for="(item,index) in list" :key="index">
 						<pubuliu-list v-if="index% 2==0" :url="item.url" num="1" :title="item.title" :name="item.name"
-							:avatar="item.avatar" :tags="item.momentTags"></pubuliu-list>
+							:avatar="item.avatar" :tags="item.tags"></pubuliu-list>
 					</view>
 				</view>
 				<view class="right">
 					<view v-for="(item,index) in list" :key="index">
 						<pubuliu-list v-if="index% 2==1" :url="item.url" num="1" :title="item.title" :name="item.name"
-							:avatar="item.avatar" :tags="item.momentTags"></pubuliu-list>
+							:avatar="item.avatar" :tags="item.tags"></pubuliu-list>
 					</view>
 				</view>
 			</scroll-view>
@@ -95,7 +95,8 @@
 									'url': e,
 									'title': obj['momentDesc'],
 									'avatar': obj['avatar'],
-									'name': obj['nickname']
+									'name': obj['nickname'],
+									'tags':JSON.parse(obj['momentTag'])
 								})
 							})
 						}

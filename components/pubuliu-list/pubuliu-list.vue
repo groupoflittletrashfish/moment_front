@@ -1,9 +1,11 @@
 <template>
 	<view class="item unified_color">
 		<image class="item-img" :src="url" mode="widthFix" @click="preview" v-if="!show"></image>
-		<view class="item-title-box">
+		<!-- 标签 -->
+		<view class="tags_container">
+			<tag v-for="(item,index) in tags" :key="index" :data="item" fontSize="20rpx" class="tag"></tag>
 		</view>
-		<tag v-for="(item,index) in tags" :key="index" :data="item"></tag>
+		<view class="item-title-box"> </view>
 		<view url="url" class="item-title" v-show="title">{{title}}</view>
 		<view class="name">
 			<image class="item-ava" :src="avatar"></image>
@@ -166,5 +168,19 @@
 		text-decoration: underline;
 		line-height: 10rpx;
 
+	}
+
+	.tags_container {
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+		align-items: center;
+		flex-wrap: wrap;
+		width: 96%;
+		
+	}
+	
+	.tag{
+		margin: 0 5rpx;
 	}
 </style>

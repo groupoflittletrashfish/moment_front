@@ -1,6 +1,7 @@
 <template>
 	<view>
-		<text :contenteditable="contenteditable" class="text" :style="{backgroundColor:backgroundColor}">{{data}}</text>
+		<text :contenteditable="contenteditable" class="text"
+			:style="{backgroundColor:backgroundColor,fontSize:fontSize}">{{data}}</text>
 	</view>
 </template>
 
@@ -21,6 +22,10 @@
 			backgroundColor: {
 				type: String,
 				default: 'seagreen'
+			},
+			fontSize: {
+				type: String,
+				default: 'smaller'
 			}
 		}
 	}
@@ -32,7 +37,7 @@
 		line-height: 5rpx;
 		background-color: seagreen;
 		border-radius: 12rpx;
-		font-size: smaller;
+		/* font-size: smaller; */
 		box-sizing: border-box;
 		padding: 2rpx 4rpx;
 	}
