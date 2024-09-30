@@ -8,7 +8,7 @@ http.setConfig((config) => {
 	var url = ""
 	console.log(process.env.NODE_ENV)
 	if (process.env.NODE_ENV === 'development') {
-		url = 'http://6n1850q762.goho.co:13890';
+		url = 'http://wumingb888.gnway.cc:8000';
 	} else {
 		url = '';
 	}

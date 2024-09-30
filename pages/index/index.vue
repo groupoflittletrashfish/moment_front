@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<!-- 吸顶和tabs -->
-		<u-sticky bgColor="#ffffff" class="sticky">
+		<u-sticky bgColor="#ffffff">
 			<view class="unified_color tabs">
 				<u-tabs :list="tabs" :activeStyle="{
 				    color: 'white',
@@ -28,7 +28,7 @@
 
 		<!-- 瀑布流 -->
 		<view v-show="index == 0" class="template_container">
-			<scroll-view class="scroll" scroll-y show-scrollbar @refresherrefresh="refresh" refresher-enabled>
+			<z-paging :fixed="false" ref="paging" v-model="list" @query="queryList" class="scroll">
 				<view class="left">
 					<view v-for="(item,index) in list" :key="index">
 						<pubuliu-list v-if="index% 2==0" :url="item.url" num="1" :title="item.title" :name="item.name"
@@ -41,11 +41,11 @@
 							:avatar="item.avatar" :tags="item.tags"></pubuliu-list>
 					</view>
 				</view>
-			</scroll-view>
+			</z-paging>
 		</view>
 
 		<!-- 时光 -->
-		<view class="unified_color">
+		<view class="unified_color" v-show="index== 1">
 			<u-scroll-list :indicator="false" class="scroll_list">
 				<view v-for="(item, index) in time_scroll_list" :key="index">
 					<view class="scroll_item">{{item.name}}</view>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+	// import ZPMixin from '@/uni_modules/z-paging/components/z-paging/js/z-paging-mixin'
 	import {
 		queryAllMoment
 	} from '../../service/api/moment'
@@ -63,8 +64,9 @@
 
 	export default {
 		mounted() {
-			this.load_moment()
+			// this.load_moment()
 		},
+		// mixins: [ZPMixin],
 		data() {
 			return {
 				tabs: [{
@@ -82,29 +84,6 @@
 			}
 		},
 		methods: {
-			refresh() {
-				this.load_moment()
-			},
-			load_moment() {
-				queryAllMoment().then(data => {
-					this.list = []
-					data.forEach(obj => {
-						if (obj['momentMedia']) {
-							obj['momentMedia'].forEach(e => {
-								this.list.push({
-									'url': e,
-									'title': obj['momentDesc'],
-									'avatar': obj['avatar'],
-									'name': obj['nickname'],
-									'tags':JSON.parse(obj['momentTag'])
-								})
-							})
-						}
-					})
-				}).catch(e => {
-					console.error(e)
-				})
-			},
 			change_tab(item) {
 				this.index = item.index
 			},
@@ -113,6 +92,30 @@
 					url: '/pages/publish_moment/publish_moment'
 				})
 			},
+			queryList(pageNo, pageSize) {
+				queryAllMoment({
+					'index': pageNo,
+					'offset': pageSize
+				}).then(data => {
+					let tmp = []
+					data.forEach(obj => {
+						if (obj['momentMedia']) {
+							obj['momentMedia'].forEach(e => {
+								tmp.push({
+									'url': e,
+									'title': obj['momentDesc'],
+									'avatar': obj['avatar'],
+									'name': obj['nickname'],
+									'tags': JSON.parse(obj['momentTag'])
+								})
+							})
+						}
+					})
+					this.$refs.paging.complete(tmp);
+				}).catch(e => {
+					this.$refs.paging.complete(false);
+				})
+			}
 		}
 	}
 </script>
@@ -138,10 +141,10 @@
 	.scroll {
 		flex: 1;
 		height: inherit;
+		width: 100%;
 	}
 
 	.template_container {
-		flex: 1;
 		height: calc(100% - 50rpx);
 	}
 
@@ -164,13 +167,6 @@
 		background-color: blue; */
 	}
 
-	.sticky {
-		/* 		position: relative;
-		display: flex; */
-		/* 		flex-direction: row;
-		justify-content: space-between;
-		align-items: center; */
-	}
 
 	/deep/ .u-tabs__wrapper__nav__line {
 		left: 25rpx;

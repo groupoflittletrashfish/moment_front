@@ -8,8 +8,8 @@ export function publish(data) {
 }
 
 
-export function queryAllMoment() {
-	return http.get('/moment/queryAllMoment')
+export function queryAllMoment(data) {
+	return http.get('/moment/queryAllMoment',data)
 }
 
 export function queryAllTags() {

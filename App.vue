@@ -45,4 +45,11 @@
 		background-color: rgb(27, 27, 37);
 		color: white;
 	}
+	
+	.unified_container{
+		width: 100%;
+		height: 100%;
+		padding: 0 5rpx;
+		box-sizing: border-box;
+	}
 </style>

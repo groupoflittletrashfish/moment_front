@@ -2,7 +2,7 @@
 	<view>
 		<view class="unified_color">
 			<view class="label">{{type_name}}</view>
-			<view class="list" v-for="(item,index) in list" :key="index" @click="toSetting(item.url)">
+			<view class="list" v-for="(item,index) in list" :key="item.type_name" @click="toSetting(item.url)">
 				<view>{{item.title}}</view>
 				<u-icon name="arrow-right"></u-icon>
 			</view>
@@ -24,8 +24,8 @@
 				type: Array
 			}
 		},
-		methods:{
-			toSetting(url){
+		methods: {
+			toSetting(url) {
 				uni.navigateTo({
 					url: url
 				})

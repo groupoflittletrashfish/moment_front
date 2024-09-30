@@ -13,23 +13,37 @@
 </template>
 
 <script>
-	import {login} from '../../service/api/user.js'
+	import {
+		getUserInfo,
+		login
+	} from '../../service/api/user.js'
 	export default {
 		data() {
 			return {
 				username: 'noname',
 				password: '123',
-				aaa:'noname'
+				aaa: 'noname'
 			}
 		},
 		methods: {
 			login() {
-				login({username:this.username,password:this.password}).then(data=>{
-					uni.setStorageSync('token',data.token)
-					uni.reLaunch({
-						url:'/pages/index/index'
+				login({
+					username: this.username,
+					password: this.password
+				}).then(data => {
+					uni.setStorageSync('token', data.token)
+
+					//直接获取一次用户的信息
+					getUserInfo().then(usr => {
+						uni.setStorageSync('user', usr)
+						console.log(uni.getStorageSync('user'))
+						uni.reLaunch({
+							url: '/pages/index/index'
+						})
+					}).catch(e => {
+						console.error(e)
 					})
-				}).catch(error=>{
+				}).catch(error => {
 					console.log(error)
 				})
 			}
@@ -45,7 +59,7 @@
 		align-items: center;
 		height: 100%;
 		width: 100%;
-		
+
 	}
 
 	.container {
